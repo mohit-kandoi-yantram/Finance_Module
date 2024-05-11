@@ -25,19 +25,24 @@ const SidebarItem = ({ item }: { item: SidebarItems }) => {
   return (
     <>
       <div
-        className={`flex items-center space-x-2 p-2 bg-blue-800 text-white rounded-full hover:bg-orange-400 cursor-pointer ${
+        className={`flex items-center justify-between space-x-2 p-2 bg-blue-800 text-white rounded-full hover:bg-orange-400 cursor-pointer ${
           isActive && 'bg-orange-400'
         }`}
         onClick={onClick}
       >
-        <Icon size={20} />
-        <p className="text-sm">{name}</p>
-        {items && items.length > 0 && (
-          <BiChevronDown
-            className={expanded ? 'rotate-180 duration-200' : ''}
-          />
-        )}
+        <div className="flex items-center space-x-2">
+          <Icon size={20} />
+          <p className="text-sm">{name}</p>
+        </div>
+        <div>
+          {items && items.length > 0 && (
+            <BiChevronDown
+              className={expanded ? 'rotate-180 duration-200' : ''}
+            />
+          )}
+        </div>
       </div>
+
       {expanded &&
         items &&
         items.length > 0 &&
