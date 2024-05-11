@@ -72,6 +72,7 @@ const Sidebar = () => {
               return <SidebarItem key={item.path} item={item} />;
             }
           })}
+          // hello
         </div>
       </div>
     </div>
