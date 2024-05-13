@@ -7,6 +7,11 @@ import { FaPeopleArrows } from 'react-icons/fa';
 import { IconType } from 'react-icons';
 import { SidebarItems, SubItems } from '../../types/Interface';
 import SidebarItem from './items';
+import { RiMoneyRupeeCircleLine } from 'react-icons/ri';
+import { FaBookOpen } from 'react-icons/fa6';
+import { MdContentPasteSearch } from 'react-icons/md';
+import { AiOutlineQuestionCircle } from 'react-icons/ai';
+import { IoIosLogOut } from 'react-icons/io';
 
 const items: SidebarItems[] = [
   {
@@ -17,34 +22,34 @@ const items: SidebarItems[] = [
       {
         name: 'Income',
         path: '/dashboard/income',
-        icon: IoMdPerson,
+        icon: RiMoneyRupeeCircleLine,
       },
       {
-        name: 'Charts',
+        name: 'Expenses',
         path: '/dashboard/expenses',
-        icon: FaPeopleArrows,
+        icon: FaBookOpen,
       },
     ],
   },
   {
     name: 'Referrals',
     path: '/referrals',
-    icon: GiOrganigram,
+    icon: MdContentPasteSearch,
   },
   {
     name: 'Profile',
     path: '/referrals',
-    icon: GiOrganigram,
+    icon: IoMdPerson,
   },
   {
     name: 'Help',
     path: '/referrals',
-    icon: GiOrganigram,
+    icon: AiOutlineQuestionCircle,
   },
   {
     name: 'Logout',
     path: '/referrals',
-    icon: GiOrganigram,
+    icon: IoIosLogOut,
   },
 ];
 
@@ -72,7 +77,6 @@ const Sidebar = () => {
               return <SidebarItem key={item.path} item={item} />;
             }
           })}
-          // hello
         </div>
       </div>
     </div>

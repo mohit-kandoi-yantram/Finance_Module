@@ -11,3 +11,9 @@ export interface SubItems {
   path: string;
   icon: IconType;
 }
+
+export interface CashFlow {
+  id: number;
+  name: string;
+  value: number;
+}
