@@ -38,17 +38,17 @@ const items: SidebarItems[] = [
   },
   {
     name: 'Profile',
-    path: '/referrals',
+    path: '/profiles',
     icon: IoMdPerson,
   },
   {
     name: 'Help',
-    path: '/referrals',
+    path: '/help',
     icon: AiOutlineQuestionCircle,
   },
   {
     name: 'Logout',
-    path: '/referrals',
+    path: '/logout',
     icon: IoIosLogOut,
   },
 ];
