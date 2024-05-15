@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { Dispatch, SetStateAction, useMemo, useState } from 'react';
 import {
   Dropdown,
   DropdownTrigger,
@@ -7,14 +7,22 @@ import {
   Button,
 } from '@nextui-org/react';
 
-export default function DropdownSelect() {
-  const [selectedKeys, setSelectedKeys] = React.useState(new Set(['text']));
+interface DropdownSelectProps {}
+type Selection = Set<string>;
 
-  const selectedValue = React.useMemo(
+const DropdownSelect: React.FC<DropdownSelectProps> = () => {
+  const [selectedKeys, setSelectedKeys] = useState<Selection>(
+    new Set(['Salaries'])
+  );
+
+  const selectedValue = useMemo(
     () => Array.from(selectedKeys).join(', ').replaceAll('_', ' '),
     [selectedKeys]
   );
 
+  const handleSelectionChange = (keys: Selection) => {
+    setSelectedKeys(keys);
+  };
   return (
     <Dropdown>
       <DropdownTrigger>
@@ -28,14 +36,15 @@ export default function DropdownSelect() {
         disallowEmptySelection
         selectionMode="single"
         selectedKeys={selectedKeys}
-        // onSelectionChange={setSelectedKeys}
+        // onSelectionChange={handleSelectionChange}
       >
-        <DropdownItem key="text">Text</DropdownItem>
-        <DropdownItem key="number">Number</DropdownItem>
-        <DropdownItem key="date">Date</DropdownItem>
-        <DropdownItem key="single_date">Single Date</DropdownItem>
-        <DropdownItem key="iteration">Iteration</DropdownItem>
+        <DropdownItem key="salary">Salaries</DropdownItem>
+        <DropdownItem key="pharmacy">Pharmacy</DropdownItem>
+        <DropdownItem key="equipment">Equipment</DropdownItem>
+        <DropdownItem key="other_expenses">Other Expenses</DropdownItem>
       </DropdownMenu>
     </Dropdown>
   );
-}
+};
+
+export default DropdownSelect;

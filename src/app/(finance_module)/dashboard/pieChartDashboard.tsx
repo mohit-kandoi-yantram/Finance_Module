@@ -1,14 +1,17 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { PieChart, Pie, Tooltip, Cell, Legend } from 'recharts';
 
-const data = [
-  { name: 'Type 1', value: 200 },
-  { name: 'Type 2', value: 300 },
-  { name: 'Type 3', value: 150 },
-  { name: 'Type 4', value: 400 },
-  { name: 'Type 5', value: 250 },
-  { name: 'Type 6', value: 350 },
+const salary = [
+  { name: 'Doctor', value: 200 },
+  { name: 'Nurses', value: 300 },
+  { name: 'Technical Staff', value: 150 },
+  { name: 'Non Technical Staff', value: 400 },
+  { name: 'Ward Boys/Girls', value: 250 },
+  { name: 'Pharmacy Staff', value: 350 },
 ];
+const pharmacy = [{ name: 'Pharmacy', value: 500 }];
+const equipments = [{ name: 'Equipments', value: 700 }];
+const other_expenses = [{ name: 'Other Expenses', value: 1500 }];
 
 const COLORS = [
   '#0088FE',
@@ -20,10 +23,25 @@ const COLORS = [
 ];
 
 const PieChartExample: React.FC = () => {
+  const [selectedOption, setSelectedOption] = useState('Pharmacy');
+  const data = () => {
+    switch (selectedOption) {
+      case 'Salary':
+        return salary;
+      case 'Pharmacy':
+        return pharmacy;
+      case 'Equipment':
+        return equipments;
+      case 'Other Expenses':
+        return other_expenses;
+      default:
+        return [];
+    }
+  };
   return (
     <PieChart width={400} height={400}>
       <Pie
-        data={data}
+        data={data()}
         dataKey="value"
         nameKey="name"
         cx="50%"
@@ -32,11 +50,11 @@ const PieChartExample: React.FC = () => {
         fill="#8884d8"
         label
       >
-        {data.map((entry, index) => (
+        {data().map((entry, index) => (
           <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} />
         ))}
       </Pie>
-      <Tooltip />
+      {/* <Tooltip /> */}
       <Legend layout="vertical" verticalAlign="middle" align="right" />
     </PieChart>
   );
