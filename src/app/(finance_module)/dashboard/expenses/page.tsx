@@ -1,7 +1,7 @@
 import React from 'react';
 
-const Expenses = () => {
+const ExpensePage = () => {
   return <div>Expenses Page</div>;
 };
 
-export default Expenses;
+export default ExpensePage;

@@ -7,7 +7,7 @@ import { DateRangePicker } from '@nextui-org/react';
 import CustomTable from '@/app/components/customTable/App';
 import Popup from '../../../components/customTable/addIncomeForm/popup';
 
-const page = () => {
+const IncomePage = () => {
   // const [openPopup, setOpenPopup] = useState();
   const [totalIncome, setTotalIncome] = useState(150558000.0);
   return (
@@ -57,4 +57,4 @@ const page = () => {
   );
 };
 
-export default page;
+export default IncomePage;
