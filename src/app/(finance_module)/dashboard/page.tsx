@@ -61,7 +61,7 @@ const generateRandomDataForMonth = (year: number, month: number) => {
   return data;
 };
 
-const page = () => {
+const Dashboard = () => {
   const [selectedItem, setSelectedItem] = useState(new Set([menu[0]['value']]));
   const [totalBalance, setTotalBalance] = useState(15050000.0);
   const year = 2024;
@@ -172,4 +172,4 @@ const page = () => {
   );
 };
 
-export default page;
+export default Dashboard;
