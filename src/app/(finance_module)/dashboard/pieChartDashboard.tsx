@@ -1,17 +1,10 @@
 import React, { useState } from 'react';
 import { PieChart, Pie, Tooltip, Cell, Legend } from 'recharts';
-
-const salary = [
-  { name: 'Doctor', value: 200 },
-  { name: 'Nurses', value: 300 },
-  { name: 'Technical Staff', value: 150 },
-  { name: 'Non Technical Staff', value: 400 },
-  { name: 'Ward Boys/Girls', value: 250 },
-  { name: 'Pharmacy Staff', value: 350 },
-];
-const pharmacy = [{ name: 'Pharmacy', value: 500 }];
-const equipments = [{ name: 'Equipments', value: 700 }];
-const other_expenses = [{ name: 'Other Expenses', value: 1500 }];
+import { equipments, other_expenses, pharmacy, salaries } from './pieChartData';
+// import { PieChartRender } from '@/app/types/Interface';
+interface PieChartExampleProps {
+  selectedItem: Set<string>;
+}
 
 const COLORS = [
   '#0088FE',
@@ -22,24 +15,16 @@ const COLORS = [
   '#F74242',
 ];
 
-const PieChartExample: React.FC = () => {
-  const [selectedOption, setSelectedOption] = useState('Pharmacy');
+const PieChartExample: React.FC<PieChartExampleProps> = ({ selectedItem }) => {
   const data = () => {
-    switch (selectedOption) {
-      case 'Salary':
-        return salary;
-      case 'Pharmacy':
-        return pharmacy;
-      case 'Equipment':
-        return equipments;
-      case 'Other Expenses':
-        return other_expenses;
-      default:
-        return [];
-    }
+    if (selectedItem.has('salaries')) return salaries;
+    if (selectedItem.has('pharmacy')) return pharmacy;
+    if (selectedItem.has('equipments')) return equipments;
+    if (selectedItem.has('other_expenses')) return other_expenses;
+    return [];
   };
   return (
-    <PieChart width={400} height={400}>
+    <PieChart width={600} height={400}>
       <Pie
         data={data()}
         dataKey="value"
@@ -48,13 +33,12 @@ const PieChartExample: React.FC = () => {
         cy="50%"
         outerRadius={100}
         fill="#8884d8"
-        label
       >
         {data().map((entry, index) => (
           <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} />
         ))}
       </Pie>
-      {/* <Tooltip /> */}
+      <Tooltip />
       <Legend layout="vertical" verticalAlign="middle" align="right" />
     </PieChart>
   );

@@ -142,7 +142,13 @@ export default function CustomTable() {
           </p>
         );
       case 'upload':
-        return <FileInput />;
+        return (
+          <FileInput
+            onFileSelect={function (file: File | null): void {
+              throw new Error('Function not implemented.');
+            }}
+          />
+        );
       case 'actions':
         return (
           <div className="relative flex justify-end items-center gap-2">

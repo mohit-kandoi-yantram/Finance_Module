@@ -6,7 +6,7 @@ import {
   DatePicker,
   DateValue,
 } from '@nextui-org/react';
-import React, { useState } from 'react';
+import React, { useMemo, useState } from 'react';
 import { FaCalendarAlt } from 'react-icons/fa';
 import { CiSettings } from 'react-icons/ci';
 import { MdCurrencyRupee } from 'react-icons/md';
@@ -17,6 +17,8 @@ import PieChartExample from './pieChartDashboard';
 import DropdownSelect from './dropdown';
 import { DateRangePicker } from '@nextui-org/react';
 import SelectComponent from '@/app/components/selectComponent/select';
+import { menu } from '@/app/components/selectComponent/data';
+// import { PieChartRender } from '@/app/types/Interface';
 
 const items: CashFlow[] = [
   {
@@ -60,11 +62,11 @@ const generateRandomDataForMonth = (year: number, month: number) => {
 };
 
 const page = () => {
+  const [selectedItem, setSelectedItem] = useState(new Set([menu[0]['value']]));
   const [totalBalance, setTotalBalance] = useState(15050000.0);
   const year = 2024;
   const month = 5; // May
   const data = generateRandomDataForMonth(year, month);
-
   return (
     <div>
       <Card className="bg-blue-800 text-white">
@@ -138,7 +140,7 @@ const page = () => {
           <div className="w-3/5">
             <Card>
               <CardBody>
-                <PieChartExample />
+                <PieChartExample selectedItem={selectedItem} />
               </CardBody>
             </Card>
           </div>
@@ -158,7 +160,10 @@ const page = () => {
               {/* <FaCalendarAlt /> */}
             </div>
             <div className="mt-4">
-              <SelectComponent />
+              <SelectComponent
+                selectedItem={selectedItem}
+                setSelectedItem={setSelectedItem}
+              />
             </div>
           </div>
         </div>

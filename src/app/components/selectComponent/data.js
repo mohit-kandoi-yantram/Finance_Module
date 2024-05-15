@@ -1,7 +1,7 @@
 export const menu = [
   {
     label: 'Salaries',
-    value: 'salary',
+    value: 'salaries',
   },
   {
     label: 'Equipments',
