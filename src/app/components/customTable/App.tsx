@@ -28,6 +28,7 @@ import { capitalize } from './utils';
 import Popup from './addIncomeForm/popup';
 import UploadFile from './uploadFile';
 import FileInput from './uploadFile';
+import { SiMicrosoftexcel } from 'react-icons/si';
 
 const INITIAL_VISIBLE_COLUMNS = [
   'transactionDateTime',
@@ -38,8 +39,6 @@ const INITIAL_VISIBLE_COLUMNS = [
   'totalAmount',
   'gstAmount',
   'paymentType',
-  'invoice',
-  'upload',
   'actions',
 ];
 
@@ -82,7 +81,7 @@ export default function CustomTable() {
         user.paymentType.toLowerCase().includes(filterValue.toLowerCase())
       );
     }
-    console.log(filteredUsers);
+    // console.log(filteredUsers);
 
     if (
       paymentFilter !== 'all' &&
@@ -92,15 +91,15 @@ export default function CustomTable() {
       //   console.log(
       //     Array.from(paymentFilter).length !== paymentTypeOptions.length
       //   );
-      console.log(filteredUsers);
+      // console.log(filteredUsers);
       filteredUsers = filteredUsers.filter((user) =>
         Array.from(paymentFilter).includes(user.paymentType)
       );
-      console.log(
-        filteredUsers.filter((user) =>
-          Array.from(paymentFilter).includes(user.paymentType)
-        )
-      );
+      // console.log(
+      //   filteredUsers.filter((user) =>
+      //     Array.from(paymentFilter).includes(user.paymentType)
+      //   )
+      // );
     }
 
     return filteredUsers;
@@ -210,6 +209,14 @@ export default function CustomTable() {
       <div className="flex flex-col gap-4">
         <div className="flex justify-end gap-3 items-end">
           <div className="flex gap-3">
+            {/* <div>
+              <SiMicrosoftexcel />
+              <FileInput
+                onFileSelect={function (file: File | null): void {
+                  throw new Error('Function not implemented.');
+                }}
+              />
+            </div> */}
             <Dropdown>
               <DropdownTrigger className="hidden sm:flex">
                 <Button
