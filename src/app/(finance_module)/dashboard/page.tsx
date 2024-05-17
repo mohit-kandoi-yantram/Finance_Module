@@ -68,13 +68,21 @@ const Dashboard = () => {
   const month = 5; // May
   const data = generateRandomDataForMonth(year, month);
   return (
-    <div>
+    <div className="p-4">
       <Card className="bg-blue-800 text-white">
         <CardBody>
-          <div className="flex justify-between p-2">
-            <p className="font-bold text-large ml-4">Total Balance</p>
-            <div className="flex items-center gap-2">
-              <div className="cursor-pointer text-black rounded-3xl p-1 border border-black bg-white hover:bg-orange-400 size-fit">
+          <div className="flex justify-between py-4 px-6">
+            <div className="flex flex-col items-center gap-4">
+              <p className="font-bold text-large ml-4">Total Balance</p>
+              <div className="flex items-center ml-4">
+                <div className="mr-2">
+                  <MdCurrencyRupee size={20} />
+                </div>
+                <div className="text-large">{totalBalance}</div>
+              </div>
+            </div>
+            <div className="flex items-center gap-4">
+              <div className="cursor-pointer text-black rounded-3xl px-2 border border-black bg-white hover:bg-orange-400 size-fit">
                 Today
               </div>
               <div>
@@ -91,14 +99,6 @@ const Dashboard = () => {
                 />
                 {/* <FaCalendarAlt /> */}
               </div>
-            </div>
-          </div>
-          <div className="flex justify-between p-2">
-            <div className="flex ml-4">
-              <div className="mr-2">
-                <MdCurrencyRupee size={20} />
-              </div>
-              <div className="text-large">{totalBalance}</div>
             </div>
           </div>
         </CardBody>

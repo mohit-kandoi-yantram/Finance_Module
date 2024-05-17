@@ -1,10 +1,7 @@
 'use client';
 import React from 'react';
 import { MdDashboard } from 'react-icons/md';
-import { GiOrganigram } from 'react-icons/gi';
 import { IoMdPerson } from 'react-icons/io';
-import { FaPeopleArrows } from 'react-icons/fa';
-import { IconType } from 'react-icons';
 import { SidebarItems, SubItems } from '../../types/Interface';
 import SidebarItem from './items';
 import { RiMoneyRupeeCircleLine } from 'react-icons/ri';
@@ -12,30 +9,37 @@ import { FaBookOpen } from 'react-icons/fa6';
 import { MdContentPasteSearch } from 'react-icons/md';
 import { AiOutlineQuestionCircle } from 'react-icons/ai';
 import { IoIosLogOut } from 'react-icons/io';
+import { GrTransaction } from 'react-icons/gr';
 
 const items: SidebarItems[] = [
   {
     name: 'Dashboard',
     path: '/dashboard',
     icon: MdDashboard,
+  },
+  {
+    name: 'Transactions',
+    path: '/transactions',
+    icon: GrTransaction,
     items: [
       {
         name: 'Income',
-        path: '/dashboard/income',
+        path: '/transactions/income',
         icon: RiMoneyRupeeCircleLine,
       },
       {
         name: 'Expenses',
-        path: '/dashboard/expenses',
+        path: '/transactions/expenses',
         icon: FaBookOpen,
+      },
+      {
+        name: 'Referrals',
+        path: '/transactions/referrals',
+        icon: MdContentPasteSearch,
       },
     ],
   },
-  {
-    name: 'Referrals',
-    path: '/referrals',
-    icon: MdContentPasteSearch,
-  },
+
   {
     name: 'Profile',
     path: '/profiles',

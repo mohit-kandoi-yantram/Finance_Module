@@ -1,6 +1,13 @@
 'use client';
 import React, { useState } from 'react';
-import { Card, CardBody } from '@nextui-org/react';
+import {
+  Card,
+  CardBody,
+  Dropdown,
+  DropdownItem,
+  DropdownMenu,
+  DropdownTrigger,
+} from '@nextui-org/react';
 
 export default function App() {
   const [searchValue, setSearchValue] = useState('');
@@ -12,7 +19,7 @@ export default function App() {
     <div className="flex">
       {/* Search Box */}
 
-      <div className="basis-2/5">
+      <div className="basis-3/5">
         <Card className=" shadow-small rounded-full ">
           <CardBody>
             {/* <div className="absolute inset-y-0 start-0 flex items-center ps-3 pointer-events-none"> */}
@@ -51,20 +58,39 @@ export default function App() {
 
       {/*  Profile Section */}
 
-      <div className="basis-3/5">
-        <Card className=" shadow-small bg-slate-100 rounded-3xl h-full">
-          <CardBody className="flex flex-row justify-between">
-            <div className="flex-shrink-0">
-              <p className="text-black">Profile</p>
-            </div>
-
+      <div className="basis-2/5">
+        <Card className=" rounded-3xl h-full shadow-small">
+          <CardBody className="flex flex-row justify-end">
             {/* Profile Picture */}
             <div>
-              <img
-                src="https://i.pravatar.cc/150?u=a042581f4e29026024d"
-                alt="profile picture"
-                className="size-10 rounded-full"
-              />
+              <Dropdown placement="bottom-end">
+                <DropdownTrigger>
+                  <img
+                    src="https://i.pravatar.cc/150?u=a042581f4e29026024d"
+                    alt="profile picture"
+                    className="size-8 rounded-full"
+                  />
+                </DropdownTrigger>
+                <DropdownMenu aria-label="Profile Actions" variant="flat">
+                  <DropdownItem key="profile" className="h-14 gap-2">
+                    <p className="font-semibold">Signed in as</p>
+                    <p className="font-semibold">zoey@example.com</p>
+                  </DropdownItem>
+                  <DropdownItem key="settings">My Settings</DropdownItem>
+                  <DropdownItem key="team_settings">Team Settings</DropdownItem>
+                  <DropdownItem key="analytics">Analytics</DropdownItem>
+                  <DropdownItem key="system">System</DropdownItem>
+                  <DropdownItem key="configurations">
+                    Configurations
+                  </DropdownItem>
+                  <DropdownItem key="help_and_feedback">
+                    Help & Feedback
+                  </DropdownItem>
+                  <DropdownItem key="logout" color="danger">
+                    Log Out
+                  </DropdownItem>
+                </DropdownMenu>
+              </Dropdown>
             </div>
             {/* <p className="text-black text-right">Profile</p> */}
             {/* <p className=" text-center">{onDuty}</p> */}

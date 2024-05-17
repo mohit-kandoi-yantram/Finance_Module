@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import {
   Table,
   TableHeader,
@@ -23,28 +23,33 @@ import { PlusIcon } from './PlusIcon';
 import { VerticalDotsIcon } from './VerticalDotsIcon';
 import { ChevronDownIcon } from './ChevronDownIcon';
 import { SearchIcon } from './SearchIcon';
-import { columns, users, paymentTypeOptions } from './data';
+import { columns, users, statusOptions } from './data';
 import { capitalize } from './utils';
 import Popup from './addIncomeForm/popup';
 import UploadFile from './uploadFile';
 import FileInput from './uploadFile';
 import { SiMicrosoftexcel } from 'react-icons/si';
+import { CiSettings } from 'react-icons/ci';
+import ReactToPrint from 'react-to-print';
+import { IoPrint } from 'react-icons/io5';
+import { FaFileExcel } from 'react-icons/fa6';
 
 const INITIAL_VISIBLE_COLUMNS = [
-  'transactionDateTime',
-  'patientId',
-  'transactionId',
-  'service',
-  'department',
-  'totalAmount',
-  'gstAmount',
-  'paymentType',
-  'actions',
+  'payeeDetails',
+  'amount',
+  'payerAccNo',
+  'payeeAccNo',
+  'txnId',
+  'status',
+  'payment',
+  'deduction',
+  'recurring',
 ];
 
 type User = (typeof users)[0];
 
 export default function CustomTable() {
+  const componentRef = useRef<HTMLDivElement>(null);
   const [openPopup, setOpenPopup] = useState(false);
   const [filterValue, setFilterValue] = React.useState('');
   const [selectedKeys, setSelectedKeys] = React.useState<Selection>(
@@ -53,7 +58,7 @@ export default function CustomTable() {
   const [visibleColumns, setVisibleColumns] = React.useState<Selection>(
     new Set(INITIAL_VISIBLE_COLUMNS)
   );
-  const [paymentFilter, setPaymentFilter] = React.useState<Selection>('all');
+  const [statusFilter, setStatusFilter] = React.useState<Selection>('all');
   const [rowsPerPage, setRowsPerPage] = React.useState(5);
   const [sortDescriptor, setSortDescriptor] = React.useState<SortDescriptor>({
     column: 'age',
@@ -78,14 +83,14 @@ export default function CustomTable() {
 
     if (hasSearchFilter) {
       filteredUsers = filteredUsers.filter((user) =>
-        user.paymentType.toLowerCase().includes(filterValue.toLowerCase())
+        user.status.toLowerCase().includes(filterValue.toLowerCase())
       );
     }
     // console.log(filteredUsers);
 
     if (
-      paymentFilter !== 'all' &&
-      Array.from(paymentFilter).length !== paymentTypeOptions.length
+      statusFilter !== 'all' &&
+      Array.from(statusFilter).length !== statusOptions.length
     ) {
       //   console.log('payment filter ' + paymentFilter !== 'all');
       //   console.log(
@@ -93,7 +98,7 @@ export default function CustomTable() {
       //   );
       // console.log(filteredUsers);
       filteredUsers = filteredUsers.filter((user) =>
-        Array.from(paymentFilter).includes(user.paymentType)
+        Array.from(statusFilter).includes(user.status)
       );
       // console.log(
       //   filteredUsers.filter((user) =>
@@ -103,7 +108,7 @@ export default function CustomTable() {
     }
 
     return filteredUsers;
-  }, [filterValue, paymentFilter]);
+  }, [filterValue, statusFilter]);
 
   const pages = Math.ceil(filteredItems.length / rowsPerPage);
 
@@ -128,16 +133,16 @@ export default function CustomTable() {
     const cellValue = user[columnKey as keyof User];
 
     switch (columnKey) {
-      case 'transactionDateTime':
+      case 'payeeDetails':
         return (
           <p className="text-bold text-tiny capitalize text-default-400">
-            {user.transactionDateTime}
+            {user.payeeDetails}
           </p>
         );
-      case 'patientId':
+      case 'amount':
         return (
           <p className="text-bold text-tiny capitalize text-default-400">
-            {user.patientId}
+            {user.amount}
           </p>
         );
       case 'upload':
@@ -158,7 +163,6 @@ export default function CustomTable() {
                 </Button>
               </DropdownTrigger>
               <DropdownMenu>
-                <DropdownItem>View</DropdownItem>
                 <DropdownItem>Edit</DropdownItem>
                 <DropdownItem>Delete</DropdownItem>
               </DropdownMenu>
@@ -209,14 +213,6 @@ export default function CustomTable() {
       <div className="flex flex-col gap-4">
         <div className="flex justify-end gap-3 items-end">
           <div className="flex gap-3">
-            {/* <div>
-              <SiMicrosoftexcel />
-              <FileInput
-                onFileSelect={function (file: File | null): void {
-                  throw new Error('Function not implemented.');
-                }}
-              />
-            </div> */}
             <Dropdown>
               <DropdownTrigger className="hidden sm:flex">
                 <Button
@@ -230,25 +226,40 @@ export default function CustomTable() {
                 disallowEmptySelection
                 aria-label="Payment Type Filter"
                 closeOnSelect={false}
-                selectedKeys={paymentFilter}
+                selectedKeys={statusFilter}
                 selectionMode="multiple"
-                onSelectionChange={setPaymentFilter}
+                onSelectionChange={setStatusFilter}
               >
-                {paymentTypeOptions.map((payment) => (
+                {statusOptions.map((payment) => (
                   <DropdownItem key={payment.uid} className="capitalize">
                     {capitalize(payment.name)}
                   </DropdownItem>
                 ))}
               </DropdownMenu>
             </Dropdown>
+
+            <Button className="flex items-center " color="primary">
+              <FaFileExcel />
+              Upload
+            </Button>
+
+            <Button
+              color="primary"
+              endContent={<PlusIcon />}
+              onClick={() => setOpenPopup(true)}
+            >
+              Add Expense
+            </Button>
             <Dropdown>
               <DropdownTrigger className="hidden sm:flex">
                 <Button
-                  endContent={<ChevronDownIcon className="text-small" />}
+                  size="sm"
+                  className="bg-white"
+                  endContent={<CiSettings size={25} />}
                   variant="flat"
-                >
-                  Columns
-                </Button>
+                ></Button>
+
+                {/* <CiSettings /> */}
               </DropdownTrigger>
               <DropdownMenu
                 disallowEmptySelection
@@ -265,37 +276,42 @@ export default function CustomTable() {
                 ))}
               </DropdownMenu>
             </Dropdown>
-            <Button
-              color="primary"
-              endContent={<PlusIcon />}
-              onClick={() => setOpenPopup(true)}
-            >
-              Add Income
-            </Button>
           </div>
         </div>
         <div className="flex justify-between items-center">
           <span className="text-default-400 text-small">
             Total {users.length} users
           </span>
-          <label className="flex items-center text-default-400 text-small">
-            Rows per page:
-            <select
-              className="bg-transparent outline-none text-default-400 text-small"
-              onChange={onRowsPerPageChange}
-              value={rowsPerPage}
-            >
-              <option value="5">5</option>
-              <option value="10">10</option>
-              <option value="15">15</option>
-            </select>
-          </label>
+          <div className="flex">
+            <label className="flex items-center text-default-400 text-small">
+              Rows per page:
+              <select
+                className="bg-transparent outline-none text-default-400 text-small"
+                onChange={onRowsPerPageChange}
+                // value={rowsPerPage}
+              >
+                <option value="5">5</option>
+                <option value="10">10</option>
+                <option value="15">15</option>
+                <option value="20">20</option>
+                <option value="25">25</option>
+              </select>
+            </label>
+            <div className="ml-4">
+              <ReactToPrint
+                trigger={() => {
+                  return <IoPrint size={20} />;
+                }}
+                content={() => componentRef.current}
+              />
+            </div>
+          </div>
         </div>
       </div>
     );
   }, [
     filterValue,
-    paymentFilter,
+    statusFilter,
     visibleColumns,
     onSearchChange,
     onRowsPerPageChange,
@@ -345,6 +361,7 @@ export default function CustomTable() {
   return (
     <>
       <Table
+        ref={componentRef}
         aria-label="Example table with custom cells, pagination and sorting"
         isHeaderSticky
         bottomContent={bottomContent}
@@ -373,7 +390,7 @@ export default function CustomTable() {
         </TableHeader>
         <TableBody emptyContent={'No users found'} items={sortedItems}>
           {(item) => (
-            <TableRow key={item.patientId}>
+            <TableRow key={item.txnId}>
               {(columnKey) => (
                 <TableCell>{renderCell(item, columnKey)}</TableCell>
               )}
