@@ -219,7 +219,7 @@ export default function CustomTable() {
                   endContent={<ChevronDownIcon className="text-small" />}
                   variant="flat"
                 >
-                  Payment Type
+                  Status Type
                 </Button>
               </DropdownTrigger>
               <DropdownMenu

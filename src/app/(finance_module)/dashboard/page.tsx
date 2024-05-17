@@ -109,7 +109,7 @@ const Dashboard = () => {
         })}
       </div>
       <div>
-        <div className="flex justify-between bg-blue-200 rounded-full p-2 cursor-pointer my-2">
+        <div className="flex justify-between bg-blue-200 rounded-full p-2 cursor-pointer my-6">
           <p className="text-medium font-semibold ml-3">Cash Flow</p>
         </div>
         <Card>
@@ -133,39 +133,35 @@ const Dashboard = () => {
         </Card>
       </div>
       <div>
-        <div className="flex justify-between bg-blue-200 rounded-full p-2 cursor-pointer my-2">
+        <div className="flex justify-between bg-blue-200 rounded-full p-2 cursor-pointer my-6">
           <p className="text-medium font-semibold ml-3">Overall Transactions</p>
         </div>
         <div className="flex">
-          <div className="w-3/5">
-            <Card>
-              <CardBody>
-                <PieChartExample selectedItem={selectedItem} />
-              </CardBody>
-            </Card>
-          </div>
-          <div className="p-6">
-            <div>
-              <DateRangePicker
-                label="Select Range"
-                className="max-w-xs"
-                variant="bordered"
-                visibleMonths={2}
-                pageBehavior="single"
-                classNames={{
-                  inputWrapper: 'bg-white',
-                  label: 'bg-white text-black',
-                }}
-              />
-              {/* <FaCalendarAlt /> */}
-            </div>
-            <div className="mt-4">
-              <SelectComponent
-                selectedItem={selectedItem}
-                setSelectedItem={setSelectedItem}
-              />
-            </div>
-          </div>
+          <Card fullWidth>
+            <CardBody>
+              <div className="flex items-center justify-center flex-shrink-0">
+                <SelectComponent
+                  selectedItem={selectedItem}
+                  setSelectedItem={setSelectedItem}
+                />
+
+                <div>
+                  <DateRangePicker
+                    label="Select Range"
+                    className="max-w-xs"
+                    variant="bordered"
+                    visibleMonths={2}
+                    pageBehavior="single"
+                    classNames={{
+                      inputWrapper: 'bg-white',
+                      label: 'bg-white text-black',
+                    }}
+                  />
+                </div>
+              </div>
+              <PieChartExample selectedItem={selectedItem} />
+            </CardBody>
+          </Card>
         </div>
       </div>
     </div>
